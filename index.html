@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You ❤️</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --pink:#ff7abf;
+      --rose:#ffb3d9;
+      --glass:rgba(255,255,255,0.18);
+      --soft:rgba(255,255,255,0.35);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:'Poppins',sans-serif;
+      color:#fff;
+      background: radial-gradient(circle at top, #3a1c5a, #14001f 70%);
+      overflow-x:hidden;
+    }
+
+    /* HERO IMAGE */
+    .hero{
+      width:100%;
+      height:60vh;
+      min-height:420px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      text-decoration:none;
+      cursor:pointer;
+
+      /* 🔴 ADD YOUR IMAGE HERE */
+      background-image:url("Home.jpg");
+      background-size:cover;
+      background-position:center;
+    }
+
+    /* soft overlay */
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.15),
+        rgba(20,0,31,0.65)
+      );
+    }
+
+    .hero span{
+      position:relative;
+      z-index:1;
+      font-family:'Playfair Display',serif;
+      font-size:36px;
+      color:#fff;
+      padding:14px 32px;
+      border-radius:999px;
+      background:rgba(0,0,0,0.35);
+      backdrop-filter:blur(6px);
+      transition:transform .3s ease, box-shadow .3s ease;
+    }
+
+    .hero:hover span{
+      transform:scale(1.05);
+      box-shadow:0 20px 40px rgba(255,122,191,0.6);
+    }
+
+    /* CONTENT */
+    .content{
+      padding:50px 20px 70px;
+      text-align:center;
+    }
+
+    h1{
+      font-family:'Playfair Display',serif;
+      font-size:36px;
+      margin-bottom:10px;
+    }
+
+    p.sub{
+      max-width:520px;
+      margin:0 auto 40px;
+      opacity:0.8;
+      line-height:1.6;
+    }
+
+    /* BUTTONS */
+    .buttons{
+      display:flex;
+      justify-content:center;
+      gap:24px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:16px 30px;
+      border-radius:999px;
+      background:var(--glass);
+      border:1px solid var(--soft);
+      cursor:pointer;
+      font-size:16px;
+      font-weight:600;
+      backdrop-filter:blur(10px);
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-5px) scale(1.05);
+      box-shadow:0 20px 40px rgba(255,122,191,0.35);
+    }
+
+    /* POPUP OVERLAY */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(15,0,25,0.7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      visibility:hidden;
+      opacity:0;
+      transition:.35s ease;
+      z-index:100;
+    }
+
+    .overlay.show{
+      visibility:visible;
+      opacity:1;
+    }
+
+    .note{
+      background:linear-gradient(180deg,#ffe6f3,#ffd0ea);
+      color:#5a0030;
+      max-width:420px;
+      padding:36px;
+      border-radius:28px;
+      text-align:center;
+      position:relative;
+      box-shadow:0 40px 90px rgba(0,0,0,0.5);
+      animation:pop .45s ease;
+    }
+
+    @keyframes pop{
+      from{transform:scale(.85);opacity:0}
+      to{transform:scale(1);opacity:1}
+    }
+
+    .note h2{
+      font-family:'Playfair Display',serif;
+      margin-top:0;
+      margin-bottom:14px;
+    }
+
+    .note p{
+      line-height:1.7;
+      font-size:15px;
+    }
+
+    .close{
+      position:absolute;
+      top:14px;
+      right:18px;
+      font-size:20px;
+      cursor:pointer;
+    }
+
+    @media(max-width:600px){
+      .hero{height:50vh}
+      .hero span{font-size:26px}
+      h1{font-size:30px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CLICKABLE TOP IMAGE -->
+  <a href="Val.html" class="hero">
+    <span>Click me, but first press those three buttons.</span>
+  </a>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <h1>I sent chotu sii cheeze for youu</h1>
+    <p class="sub">
+      Three tiny gestures, each holding a feeling I want you to know.
+    </p>
+
+    <div class="buttons">
+      <div class="btn" onclick="openNote('cake')">🍰 Cake</div>
+      <div class="btn" onclick="openNote('flowers')">💐 Flowers</div>
+      <div class="btn" onclick="openNote('teddy')">🧸 Teddy</div>
+    </div>
+  </div>
+
+  <!-- POPUP NOTE -->
+  <div class="overlay" id="overlay">
+    <div class="note">
+      <div class="close" onclick="closeNote()">✕</div>
+      <h2 id="noteTitle"></h2>
+      <p id="noteText"></p>
+    </div>
+  </div>
+
+  <script>
+    const notes = {
+      cake: {
+        title: 'Cutu sa heart wala cake',
+        text: 'I sent you the cake because I wanted you to know how much I love making you happy, and what a cutu sweetu kid you. (and also because i am scared of hungry you hahaha)'
+      },
+      flowers: {
+        title: 'Chootu se flowers',
+        text: 'A reminder that I love doing the things you love, how much I love making you smile. And a promise to always make you smile no matter what. Love youu'
+      },
+      teddy: {
+        title: 'Cuddlu sa teddy :)',
+        text: 'For the nights I am not there with you to cuddle with you, all the teddys will keep you safe and warm, till the day,we get to get married and live together. I love you will all my heart my cute kid.💌 '
+      }
+    };
+
+    function openNote(type){
+      document.getElementById('noteTitle').innerText = notes[type].title;
+      document.getElementById('noteText').innerText = notes[type].text;
+      document.getElementById('overlay').classList.add('show');
+    }
+
+    function closeNote(){
+      document.getElementById('overlay').classList.remove('show');
+    }
+  </script>
+
+</body>
+</html>
